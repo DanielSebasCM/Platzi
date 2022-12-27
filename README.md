@@ -1,0 +1,2 @@
+# Platzi
+Platzi exercises
