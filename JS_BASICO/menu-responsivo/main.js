@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const shoppingCart = document.querySelector('.navbar-shopping-cart');
   const shoppingCartDropdown = document.querySelector('.product-detail');
   const cardsContainer = document.querySelector('.cards-container');
+  const productDetailCart = document.querySelector('.product-detail-cart');
+  let menus = [desktopMenu, mobileMenu, shoppingCartDropdown, productDetailCart];
+
   let products = [{
     name: "Bike",
     price: 120,
@@ -67,26 +70,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   displayProducts(products);
 
-  navbarEmail.addEventListener('click', () => {
-    desktopMenu.classList.toggle('inactive');
-    shoppingCartDropdown.classList.add('inactive');
-  });
-
-  menu.addEventListener('click', () => {
-    mobileMenu.classList.toggle('inactive');
-    shoppingCartDropdown.classList.add('inactive');
-  });
-
-  shoppingCart.addEventListener('click', () => {
-    shoppingCartDropdown.classList.toggle('inactive');
-    mobileMenu.classList.add('inactive');
-    desktopMenu.classList.add('inactive');
-  });
+  const productTiles = Array.from(document.querySelectorAll('.product-card'));
 
 
+  for (tile of productTiles) {
+    tile.addEventListener('click', () => toggleMenus(productDetailCart));
+  };
 
+  productDetailCart
+    .querySelector('.product-detail-close')
+    .addEventListener('click', () => productDetailCart.classList.add('inactive'));
 
+  navbarEmail.addEventListener('click', () => toggleMenus(desktopMenu));
 
+  menu.addEventListener('click', () => toggleMenus(mobileMenu));
+
+  shoppingCart.addEventListener('click', () => toggleMenus(shoppingCartDropdown));
+
+  function toggleMenus(element) {
+    for (elem of menus) {
+      if (elem === element) {
+        elem.classList.toggle('inactive');
+      } else {
+        elem.classList.add('inactive');
+      }
+    }
+  }
 
   function displayProducts(arr) {
     for (let product of arr) {
@@ -127,5 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cardsContainer.appendChild(productCard);
     }
   }
+
+
 
 });
