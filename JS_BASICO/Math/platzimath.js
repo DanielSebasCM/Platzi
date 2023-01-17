@@ -1,3 +1,5 @@
+"use strict"
+
 const PlatziMath = {
   calcMode: (list) => {
     const listCount = {};
@@ -13,9 +15,12 @@ const PlatziMath = {
     return mode[0];
   },
   calcMedian: (unorderedList) => {
+    if (unorderedList.length == 0) return 0;
+    if (unorderedList.length == 1) return unorderedList[0];
+
     const list = unorderedList.sort((a, b) => a - b);
     const indexMid = Math.floor(list.length / 2);
-    if (list.lenght % 2) {
+    if (list.length % 2) {
       return list[indexMid];
     } else {
       return (list[indexMid] + list[indexMid - 1]) / 2;
