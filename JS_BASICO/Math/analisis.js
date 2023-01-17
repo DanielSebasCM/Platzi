@@ -1,23 +1,17 @@
 console.log(salarios);
 
-// Análisis personal para Juanita
+// Análisis personal
 function encontrarPersona(personaEnBusqueda) {
   return salarios.find(persona => persona.name == personaEnBusqueda);
-  
-  // const persona = salarios.find((persona) => {
-  //   return persona.name == personaEnBusqueda;
-  // });
-  // return persona;
 }
 
 function medianaPorPersona(nombrePersona) {
-  const trabajos = encontrarPersona(nombrePersona).trabajos;
 
-  const salarios = trabajos.map(function (elemento) {
-    return elemento.salario;
-  });
+  const salarios = encontrarPersona(nombrePersona)
+    .trabajos
+    .map(trabajo => trabajo.salario);
 
-  const medianaSalarios = PlatziMath.calcularMediana(salarios);
+  const medianaSalarios = PlatziMath.calcMedian(salarios);
 
   console.log(medianaSalarios);
   return medianaSalarios;
@@ -25,24 +19,39 @@ function medianaPorPersona(nombrePersona) {
 
 function proyeccionPorPersona(nombrePersona) {
   const trabajos = encontrarPersona(nombrePersona).trabajos;
-
+  const salarios = trabajos.map(trabajo => trabajo.salario);
   let porcentajesCrecimiento = [];
-  
+
   for (let i = 1; i < trabajos.length; i++) {
-    const salarioActual = trabajos[i].salario;
-    const salarioPasado = trabajos[i - 1].salario;
-    const crecimiento = salarioActual - salarioPasado;
-    const porcentajeCrecimiento = crecimiento / salarioPasado;
-    porcentajesCrecimiento.push(porcentajeCrecimiento)
+    const salarioAnterior = salarios[i - 1];
+    const salarioActual = salarios[i];
+    const porcentajeCrecimiento = (salarioActual - salarioAnterior) / salarioAnterior;
+    porcentajesCrecimiento.push(porcentajeCrecimiento);
   }
 
-  const medianaPorcentajesCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
+  const medianaPorcentajesCrecimiento = PlatziMath.calcMedian(porcentajesCrecimiento);
 
-  // console.log({porcentajesCrecimiento, medianaPorcentajesCrecimiento});
-
-  const ultimoSalario = trabajos[trabajos.length - 1].salario;
-  const aumento = ultimoSalario * medianaPorcentajesCrecimiento;
-  const nuevoSalario = ultimoSalario + aumento;
+  const ultimoSalario = salarios[salarios.length - 1];
+  const nuevoSalario = ultimoSalario(1 + medianaPorcentajesCrecimiento);
 
   return nuevoSalario;
 }
+
+function analisisEmpresarial(personas) {
+  const empresas = {};
+  for (persona of personas) {
+    for (trabajo of persona.trabajos) {
+      const nombre = trabajo.empresa;
+      const anio = trabajo.year;
+      if (!empresas[nombre]) {
+        empresas[nombre] = {};
+      }
+      if (!empresas[nombre][anio]) {
+        empresas[nombre][anio] = [];
+      }
+      empresas[nombre][anio].push(trabajo.salario);
+    }
+  }
+  return empresas;
+}
+
