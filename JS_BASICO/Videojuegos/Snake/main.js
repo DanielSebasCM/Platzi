@@ -7,9 +7,6 @@ window.addEventListener('load', function () {
   let aspectRatio = 16 / 9;
   let gridSize = 2 * 16;
 
-  let board = Array(gridSize).fill().map(() => Array(gridSize / aspectRatio).fill(createTile("-", 0)));
-  console.log(board);
-
   let canvasSize;
   let elementSize;
   let speed = 5;
@@ -17,24 +14,23 @@ window.addEventListener('load', function () {
     length: 3,
     x: 0,
     y: 0,
-    direction: [1, 0]
+    direction: [1, 0],
+    body: []
   };
 
-
-  function createTile(type, lifeSpan) {
-    return { type, lifeSpan };
-  }
+  resizeCanvas();
 
   setInterval(() => {
-    game.clearRect(0, 0, canvas.width, canvas.height);
-
+    snake.body.unshift([snake.x, snake.y]);
     snake.x += snake.direction[0];
     snake.y += snake.direction[1];
-    board[snake.x][snake.y] = createTile("s", snake['length']);
-    drawSnake();
+    if (snake.body.length > snake.length) {
+      snake.body.pop();
+    }
+    renderSnake();
   }, 1000 / speed);
 
-  resizeCanvas();
+
 
   window.addEventListener('keydown', (event) => {
     switch (event.key) {
@@ -63,20 +59,12 @@ window.addEventListener('load', function () {
     //renderFrame();
   }
 
-  function drawSnake() {
+  function renderSnake() {
+    game.fillStyle = "#788374";
     game.clearRect(0, 0, canvas.width, canvas.height);
-    game.fillStyle = '#788374';
-    board.forEach((row, x) => {
-      row.forEach((tile, y) => {
-        if (tile.type === 's') {
-          if (tile.lifeSpan-- <= 0) {
-            board[x][y] = createTile("-", 0);
-          } else {
-            game.fillRect(x * elementSize, y * elementSize, elementSize, elementSize);
-          }
-        }
-      });
+    snake.body.forEach((element) => {
+      game.fillRect(element[0] * elementSize, element[1] * elementSize, elementSize, elementSize);
     });
-
   }
+
 });
