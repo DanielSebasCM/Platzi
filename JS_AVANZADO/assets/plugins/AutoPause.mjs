@@ -10,15 +10,15 @@ const autoPauseMethods = {
         player.pause();
       }
     });
-  },
 
-  handleIntersection() {
-    const entry = entries[0];
-    const isVisible = entry.intersectionRatio >= this.threshold;
-    if (isVisible) {
-      player.play();
-    } else {
-      player.pause();
+    function handleIntersection(entries) {
+      const entry = entries[0];
+      const isVisible = entry.intersectionRatio >= this.threshold;
+      if (isVisible) {
+        player.play();
+      } else {
+        player.pause();
+      }
     }
   },
 };

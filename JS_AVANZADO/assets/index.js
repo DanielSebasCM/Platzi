@@ -9,6 +9,14 @@ const togglePlayBtn = document.querySelector('#togglePlay');
 const toggleMuteBtn = document.querySelector('#toggleMute');
 
 let player = createMediaPlayer({ video: video, plugins: [getAutoPlay(), getAutoPause()] });
-console.log(player);
+
 togglePlayBtn.onclick = () => player.togglePlay();
 toggleMuteBtn.onclick = () => player.toggleMute();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(error => {
+    console.log(error.message);
+  });
+}
+
+
