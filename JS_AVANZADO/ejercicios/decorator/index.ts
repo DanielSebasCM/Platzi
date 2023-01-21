@@ -8,7 +8,7 @@ class Field {
 
     let errorMessage = document.createElement('p');
     errorMessage.className = 'text-danger';
-    this.input.parentNode.insertBefore(errorMessage, this.input.nextSibling);
+    this.input.parentNode?.insertBefore(errorMessage, this.input.nextSibling);
 
     this.input.addEventListener('input', () => {
       this.errors = [];
@@ -17,13 +17,13 @@ class Field {
     });
   }
 
-  validate() {}
+  validate() { }
 }
 
 function RequiredFieldDecorator(field: Field): Field {
   let validate = field.validate;
 
-  field.validate = function() {
+  field.validate = function () {
     validate();
     let value = field.input.value;
     if (!value) {
@@ -37,7 +37,7 @@ function RequiredFieldDecorator(field: Field): Field {
 function EmailFieldDecorator(field: Field): Field {
   let validate = field.validate;
 
-  field.validate = function() {
+  field.validate = function () {
     validate();
     let value = field.input.value;
 
@@ -49,6 +49,11 @@ function EmailFieldDecorator(field: Field): Field {
   return field;
 }
 
-let field = new Field(document.querySelector('#email'));
+let emailInput: HTMLInputElement | null = document.querySelector('#email');
+if (!emailInput) throw new Error('No existe el campo');
+
+let field = new Field(emailInput);
+
+
 field = RequiredFieldDecorator(field);
 field = EmailFieldDecorator(field);

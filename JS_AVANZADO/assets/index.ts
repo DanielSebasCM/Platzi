@@ -6,8 +6,8 @@ import AutoPause from "./plugins/AutoPause";
 import { Config } from "./interfaces/Interfaces";
 
 const video = document.querySelector('video');
-const togglePlayBtn = document.querySelector('#togglePlay');
-const toggleMuteBtn = document.querySelector('#toggleMute');
+const togglePlayBtn: HTMLButtonElement | null = document.querySelector('#togglePlay');
+const toggleMuteBtn: HTMLButtonElement | null = document.querySelector('#toggleMute');
 
 if (!video) throw new Error('No video element found');
 if (!togglePlayBtn) throw new Error('No togglePlay button found');
@@ -20,8 +20,8 @@ let config: Config = {
 
 let player = new MediaPlayer(config);
 
-togglePlayBtn.addEventListener('click', () => player.togglePlay());
-toggleMuteBtn.addEventListener('click', () => player.toggleMute());
+togglePlayBtn.onclick = () => player.togglePlay();
+toggleMuteBtn.onclick = () => player.toggleMute();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(error => {
