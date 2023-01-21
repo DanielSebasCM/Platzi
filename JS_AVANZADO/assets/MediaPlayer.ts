@@ -1,9 +1,6 @@
-export interface Config {
-  media: HTMLVideoElement | null;
-  plugins: any[];
-};
+import { Config } from './interfaces/Interfaces';
 
-export class MediaPlayer {
+export default class MediaPlayer {
   media: HTMLVideoElement;
   plugins: any[];
 
