@@ -4,16 +4,7 @@ self.addEventListener('install', event => {
 
 async function precache() {
   const cache = await caches.open('v1');
-  return cache.addAll([
-    '/',
-    '/index.html',
-    '/assets/index.js',
-    '/assets/MediaPlayer.mjs',
-    '/assets/plugins/AutoPlay.mjs',
-    '/assets/plugins/AutoPause.mjs',
-    '/assets/index.css',
-    '/assets/BigBuckBunny.mp4',
-  ])
+  return cache.addAll([]);
 }
 
 async function cacheResponse(request) {
