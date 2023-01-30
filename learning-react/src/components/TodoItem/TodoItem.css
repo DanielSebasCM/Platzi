@@ -1,0 +1,11 @@
+.TodoItem {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.delete {
+  color: red;
+  cursor: pointer;
+  padding: 0 0.3rem;
+}
