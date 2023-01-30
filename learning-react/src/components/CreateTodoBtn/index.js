@@ -1,18 +1,15 @@
 import "./CreateTodoBtn.css";
+import { useContext } from "react";
+import { TodoContext } from "../../TodoContext";
 
-function CreateTodoBtn({ todos, setTodos, searchValue, setSearchValue }) {
+function CreateTodoBtn() {
+  const { todos, saveTodos, searchValue, setSearchValue, setOpenModal } =
+    useContext(TodoContext);
+
   return (
     <button
       className="CreateTodoBtn"
-      onClick={() => {
-        console.log("CLICKK");
-        if (todos.map((todo) => todo.text).includes(searchValue)) {
-          alert("You already have this task");
-        } else {
-          setSearchValue("");
-          setTodos([...todos, { text: searchValue, completed: false }]);
-        }
-      }}
+      onClick={() => setOpenModal((prevState) => !prevState)}
     >
       +
     </button>
