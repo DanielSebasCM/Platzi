@@ -1,6 +1,17 @@
 import "./TodoItem.css";
+import React from "react";
 
-function TodoItem({ completed, text, toggleComplete, onDelete }) {
+function TodoItem({
+  completed,
+  text,
+  toggleComplete,
+  onDelete,
+}: {
+  completed: boolean;
+  text: string;
+  toggleComplete: () => void;
+  onDelete: () => void;
+}) {
   return (
     <li className="TodoItem">
       <label>
